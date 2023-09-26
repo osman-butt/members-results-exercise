@@ -24,6 +24,7 @@ async function initApp() {
   console.log(resultsArr);
   console.log(membersArr);
   displayResults(resultsArr);
+  displayMembers(membersArr);
   // TODO: Make the rest of the program ...
 }
 
@@ -54,6 +55,22 @@ function displayResults(results) {
       <td>${result.discipline}</td>
       <td>${result.type}</td>
       <td>${result.timeToString()}</td>
+    </tr>`;
+
+    table.insertAdjacentHTML("beforeend", html);
+  }
+}
+
+function displayMembers(members) {
+  const table = document.querySelector("table#members tbody");
+  table.innerHTML = "";
+  for (const member of members) {
+    const html = /*html*/ `
+    <tr>
+      <td>${member.name}</td>
+      <td>${member.active}</td>
+      <td>${member.birthday.toLocaleString("da-DK", dateDisplayOptions)}</td>
+      <td>${member.getAge()}</td>
     </tr>`;
 
     table.insertAdjacentHTML("beforeend", html);
