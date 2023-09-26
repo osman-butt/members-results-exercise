@@ -1,13 +1,22 @@
-function construct(memberdata) {
+function construct(memberData) {
   const MemberObject = {
-    name: memberdata.firstName,
-    active: memberdata.isActiveMember,
-    competitive: memberdata.isCompetitive,
-    birthday: new Date(memberdata.dateOfBirth),
-    email: memberdata.email,
-    gender: memberdata.gender,
-    image: memberdata.image,
-    hasPayed: memberdata.hasPayed,
+    firstName: memberData.firstName,
+    lastName: memberData.lastName,
+    id: memberData.id,
+    image: memberData.image,
+    active: memberData.isActiveMember,
+    competitive: memberData.isCompetitive,
+    birthday: new Date(memberData.dateOfBirth),
+    email: memberData.email,
+    gender: memberData.gender,
+    image: memberData.image,
+    hasPayed: memberData.hasPayed,
+    set name(memberData) {
+      this._name = memberData.firstName + " " + memberData.lastname;
+    },
+    get name() {
+      return this._name;
+    },
     getAge() {
       const today = new Date();
       const dob = this.birthday;
@@ -26,11 +35,13 @@ function construct(memberdata) {
     isSenior() {
       return this.getAge() < 18 ? false : true;
     },
-    getJuniorSeniorStatus() {
-      return this.getAge() < 18 ? "Junior" : "Senior";
-    },
+    // getJuniorSeniorStatus() {
+    //   return this.getAge() < 18 ? "Junior" : "Senior";
+    // },
   };
-
+  Object.defineProperty(MemberObject, "id", { writable: false });
+  Object.defineProperty(MemberObject, "name", { enumerable: false });
+  Object.defineProperty(MemberObject, "image", { enumerable: false });
   return MemberObject;
 }
 
