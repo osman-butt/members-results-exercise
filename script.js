@@ -5,8 +5,17 @@ import { fetchResults, fetchMembers } from "./data-fetch.js";
 
 window.addEventListener("load", initApp);
 
+// Global data arrays
 const resultsArr = [];
 const membersArr = [];
+
+// Config for Date object
+const dateDisplayOptions = {
+  year: "numeric",
+  month: "short",
+  day: "2-digit",
+  timeZone: "Europe/Copenhagen",
+};
 
 async function initApp() {
   initTabs();
@@ -14,6 +23,7 @@ async function initApp() {
   await buildMembersList();
   console.log(resultsArr);
   console.log(membersArr);
+  displayResults(resultsArr);
   // TODO: Make the rest of the program ...
 }
 
@@ -30,5 +40,22 @@ async function buildMembersList() {
   for (const jsonObj of originalResults) {
     const realObject = member.construct(jsonObj);
     membersArr.push(realObject);
+  }
+}
+
+function displayResults(results) {
+  const table = document.querySelector("table#results tbody");
+  table.innerHTML = "";
+  for (const result of results) {
+    const html = /*html*/ `
+    <tr>
+      <td>${result.date.toLocaleString("da-DK", dateDisplayOptions)}</td>
+      <td>${result.id}</td>
+      <td>${result.discipline}</td>
+      <td>${result.type}</td>
+      <td>${result.timeToString()}</td>
+    </tr>`;
+
+    table.insertAdjacentHTML("beforeend", html);
   }
 }
