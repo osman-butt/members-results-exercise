@@ -5,7 +5,7 @@ async function fetchResults() {
 }
 
 async function fetchMembers() {
-  const resp = await fetch("./data/results.json");
+  const resp = await fetch("./data/members.json");
   const data = await resp.json();
   return data;
 }
