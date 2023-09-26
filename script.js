@@ -1,6 +1,7 @@
 import { initTabs } from "./tabs.js";
 import * as member from "./member.js";
-import * as result from "./results.js";
+import * as result from "./result.js";
+import { fetchResults, fetchMembers } from "rest-services.js";
 
 window.addEventListener("load", initApp);
 
