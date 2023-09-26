@@ -12,7 +12,7 @@ function construct(memberData) {
     image: memberData.image,
     hasPayed: memberData.hasPayed,
     set name(memberData) {
-      this._name = memberData.firstName + " " + memberData.lastname;
+      this._name = memberData.firstName + " " + memberData.lastName;
     },
     get name() {
       return this._name;
@@ -39,6 +39,7 @@ function construct(memberData) {
     //   return this.getAge() < 18 ? "Junior" : "Senior";
     // },
   };
+  MemberObject.name = memberData;
   Object.defineProperty(MemberObject, "id", { writable: false });
   Object.defineProperty(MemberObject, "name", { enumerable: false });
   Object.defineProperty(MemberObject, "image", { enumerable: false });

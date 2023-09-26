@@ -68,9 +68,10 @@ function displayMembers(members) {
     const html = /*html*/ `
     <tr>
       <td>${member.name}</td>
-      <td>${member.active}</td>
+      <td>${member.active ? "Ja" : "Nej"}</td>
       <td>${member.birthday.toLocaleString("da-DK", dateDisplayOptions)}</td>
       <td>${member.getAge()}</td>
+      <td>${member.isJunior() ? "Junior" : "Senior"}</td>
     </tr>`;
 
     table.insertAdjacentHTML("beforeend", html);
