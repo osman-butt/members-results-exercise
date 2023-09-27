@@ -1,5 +1,6 @@
+import { findMemberById } from "./script.js";
+
 function construct(resultData) {
-  // console.log("constructor is called");
   const ResultObject = {
     date: new Date(resultData.date),
     id: resultData.id,
@@ -26,9 +27,19 @@ function construct(resultData) {
     get time() {
       return this._time;
     },
+    set member(value) {
+      this._member = value;
+    },
+    get member() {
+      return this._member;
+    },
   };
+  // Add member object to results
+  ResultObject.member = findMemberById(resultData.memberId);
+  // Add time result to object
   ResultObject.time = resultData.time;
-  Object.defineProperty(ResultObject, "_time", { enumerable: false });
+  // Make id property non writeable
+  Object.defineProperty(ResultObject, "id", { writable: false });
   return ResultObject;
 }
 
