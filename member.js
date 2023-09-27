@@ -10,7 +10,6 @@ function construct(memberData) {
     email: memberData.email,
     gender: memberData.gender,
     image: memberData.image,
-    hasPayed: memberData.hasPayed,
     set name(memberData) {
       this._name = memberData.firstName + " " + memberData.lastName;
     },
@@ -35,12 +34,14 @@ function construct(memberData) {
     isSenior() {
       return this.getAge() < 18 ? false : true;
     },
-    // getJuniorSeniorStatus() {
-    //   return this.getAge() < 18 ? "Junior" : "Senior";
-    // },
+    getJuniorSeniorStatus() {
+      return this.getAge() < 18 ? "Junior" : "Senior";
+    },
   };
   MemberObject.name = memberData;
+  // Make id property non writeable
   Object.defineProperty(MemberObject, "id", { writable: false });
+  // Make name and image non-enumerable
   Object.defineProperty(MemberObject, "name", { enumerable: false });
   Object.defineProperty(MemberObject, "image", { enumerable: false });
   return MemberObject;
