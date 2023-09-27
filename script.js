@@ -18,14 +18,33 @@ const dateDisplayOptions = {
 };
 
 async function initApp() {
+  console.log("script.js is running!");
   initTabs();
-  await buildResultsList();
+  // Build data structure
   await buildMembersList();
-  console.log(resultsArr);
-  console.log(membersArr);
-  displayResults(resultsArr);
+  await buildResultsList();
+
+  // Sort results by best one first
+  resultsArr.sort((result1, result2) => result1.time - result2.time);
+
+  // Display in HTML table
   displayMembers(membersArr);
-  // TODO: Make the rest of the program ...
+  displayResults(resultsArr);
+
+  // EXAMPLE for..in loop
+  // console.log("----------MEMBER OBJECT----------");
+  // for (const key in membersArr[0]) {
+  //   console.log(`${key}: ${membersArr[0][key]}`);
+  // }
+
+  // CHANGE ID of MEMBER OBJECT ()
+  // membersArr[0].id = "TEST";
+  // console.log(membersArr[0]);
+
+  // console.log("----------RESULT OBJECT----------");
+  // for (const key in resultsArr[0]) {
+  //   console.log(`${key}: ${resultsArr[0][key]}`);
+  // }
 }
 
 async function buildResultsList() {
@@ -47,16 +66,21 @@ async function buildMembersList() {
 function displayResults(results) {
   const table = document.querySelector("table#results tbody");
   table.innerHTML = "";
+  const disciplineNames = {
+    breaststroke: "Brystsvømning",
+    butterfly: "Butterfly",
+    backstroke: "Rygsvømning",
+    freestyle: "Fri svømning",
+  };
   for (const result of results) {
     const html = /*html*/ `
     <tr>
       <td>${result.date.toLocaleString("da-DK", dateDisplayOptions)}</td>
-      <td>${result.id}</td>
-      <td>${result.discipline}</td>
-      <td>${result.type}</td>
+      <td>${result.member ? result.member.name : ""}</td>
+      <td>${disciplineNames[result.discipline] || "Ukendt Disciplin"}</td>
+      <td>${result.isTraining() ? "Træning" : "Stævne"}</td>
       <td>${result.timeToString()}</td>
     </tr>`;
-
     table.insertAdjacentHTML("beforeend", html);
   }
 }
@@ -71,9 +95,18 @@ function displayMembers(members) {
       <td>${member.active ? "Ja" : "Nej"}</td>
       <td>${member.birthday.toLocaleString("da-DK", dateDisplayOptions)}</td>
       <td>${member.getAge()}</td>
-      <td>${member.isJunior() ? "Junior" : "Senior"}</td>
+      <td>${member.getJuniorSeniorStatus()}</td>
     </tr>`;
 
     table.insertAdjacentHTML("beforeend", html);
   }
 }
+
+function findMemberById(id) {
+  // console.log("ID:", id);
+  const member = membersArr.filter(member => member.id === id)[0];
+  // console.log(member);
+  return member;
+}
+
+export { findMemberById };
